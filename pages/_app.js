@@ -11,12 +11,12 @@ const App = ({ Component, pageProps }) => {
   );
 };
 
-App.getInitialProps = async ({ ctx }) => {
-  const { req } = ctx;
-  const lang = req ? req.headers["z-lang"] : "en";
-  setLang(lang);
+// App.getInitialProps = async ({ ctx }) => {
+//   const { req } = ctx;
+//   const lang = req ? req.headers["z-lang"] : "en";
+//   setLang(lang);
 
-  return { lang };
-};
+//   return { lang };
+// };
 
 export default App;
