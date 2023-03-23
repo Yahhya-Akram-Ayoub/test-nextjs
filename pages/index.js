@@ -22,9 +22,9 @@ export default function Home({ name }) {
     return <p>{user.error}</p>;
   }
 
-  useEffect(() => {
-    DoLogin();
-  }, [0]);
+  //useEffect(() => {
+  //  DoLogin();
+  //}, [0]);
 
   return (
     <>
