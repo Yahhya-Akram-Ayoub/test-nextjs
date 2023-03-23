@@ -1,11 +1,31 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+import { useEffect } from "react";
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.scss";
+import { parseCookies } from "nookies";
+import cookie from "cookie";
+import { useDispatch, useSelector } from "react-redux";
+// import { login } from "../redux/slices/UserSlice";
+import DoLogin from "../redux/actions/login";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home({ name }) {
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  if (user.isLoading) {
+    return <p>Loading...</p>;
+  }
+  if (user.error) {
+    return <p>{user.error}</p>;
+  }
+
+  useEffect(() => {
+    DoLogin();
+  }, [0]);
+
   return (
     <>
       <Head>
@@ -17,7 +37,7 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.description}>
           <p>
-            Get started by editing&nbsp;
+            Get started by editing&nbsp; {name ? `Hiiiii ${name}` : ""}
             <code className={styles.code}>pages/index.tsx</code>
           </p>
           <div>
@@ -26,7 +46,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              By{' '}
+              By{" "}
               <Image
                 src="/vercel.svg"
                 alt="Vercel Logo"
@@ -119,5 +139,24 @@ export default function Home() {
         </div>
       </main>
     </>
-  )
+  );
+}
+
+export async function getServerSideProps(context) {
+  // Fetch data from external API
+  //let data = parseCookies(context);
+  const cookies = cookie.parse(context.req.headers.cookie || "");
+  const name = cookies.name ?? "unde";
+  const data = { name: name };
+  if (!data) {
+    return {
+      redirect: {
+        destination: "login",
+        permanent: false,
+      },
+    };
+  }
+
+  // Pass data to the page via props
+  return { props: data };
 }
