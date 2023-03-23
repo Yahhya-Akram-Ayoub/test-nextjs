@@ -7,10 +7,10 @@ const Date = () => {
   const handleGetDate = () => {
     const userDateTime = new window.Date();
     const userDateTimeString = userDateTime.toISOString();
-
+///api/user/get-date?datetime=2023-03-23T23:10:00.737Z
     axios
       .get(
-        `https://localhost:7246/api/user/get-date?datetime=${userDateTimeString}`
+        `http://yahhayayyssy-001-site1.btempurl.com/api/user/get-date?datetime=${userDateTimeString}`
       )
       .then((res) => {
         let arr = [...res.data.list];
