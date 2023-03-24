@@ -7,10 +7,15 @@ const Date = () => {
   const handleGetDate = () => {
     const userDateTime = new window.Date();
     const userDateTimeString = userDateTime.toISOString();
-///api/user/get-date?datetime=2023-03-23T23:10:00.737Z
+    ///api/user/get-date?datetime=2023-03-23T23:10:00.737Z
     axios
       .get(
-        `http://yahhayayyssy-001-site1.btempurl.com/api/user/get-date?datetime=${userDateTimeString}`
+        `https://cors-anywhere.herokuapp.com/http://yahhayayyssy-001-site1.btempurl.com/api/user/get-date?datetime=${userDateTimeString}`,
+        {
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+          },
+        }
       )
       .then((res) => {
         let arr = [...res.data.list];
